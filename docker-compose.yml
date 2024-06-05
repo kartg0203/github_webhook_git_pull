@@ -4,10 +4,10 @@ services:
     container_name: github_webhook_git_pull
     volumes:
       - ./repositories:/app/repositories
-      # - ./git_pull.sh:/app/git_pull.sh
+      - ./git-pull.sh:/app/git-pull.sh
       - ./app.py:/app/app.py
     environment:
       FLASK_APP: app.py
     ports:
-      - "5010:5000"
+      - "5015:5000"
     restart: always

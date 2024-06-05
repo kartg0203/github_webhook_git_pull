@@ -29,6 +29,18 @@ repository_path="/app/repositories/${repository_name}"
 
 cd $repository_path || exit
 
+# Fetch and reset to remote branch
+if ! git fetch origin $branch_name; then
+    echo "$(date +"%Y-%m-%dT%H%M%SZ") Git fetch failed for repository ${repository_name}, branch ${branch_name}, git code $?" >> /var/log/gitPull.log
+    exit 1
+fi
+
+# Reset local branch to match the remote branch
+if ! git reset --hard origin/$branch_name; then
+    echo "$(date +"%Y-%m-%dT%H%M%SZ") Git reset --hard failed for repository ${repository_name}, branch ${branch_name}, git code $?" >> /var/log/gitPull.log
+    exit 1
+fi
+
 # Execute git pull
 if ! git pull origin $branch_name; then
     echo "$(date +"%Y-%m-%dT%H%M%SZ") Git Pull failed for repository ${repository_name}, branch ${branch_name}, git code $?" >> /var/log/gitPull.log
