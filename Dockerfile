@@ -2,7 +2,7 @@ FROM python:3.12.3-alpine3.20
 
 RUN apk add --no-cache git openssh
 
-RUN pip install Flask
+RUN pip install Flask gunicorn
 
 WORKDIR /app
 
@@ -27,4 +27,4 @@ RUN mkdir -p /app/repositories
 
 EXPOSE 5000
 
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
