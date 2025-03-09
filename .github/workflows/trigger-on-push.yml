@@ -1,0 +1,6 @@
+name: Trigger on Push
+
+on:
+  push:
+    branches:
+      - '**'
